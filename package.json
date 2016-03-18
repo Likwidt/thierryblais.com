@@ -1,0 +1,27 @@
+{
+  "name": "thierryblais.com",
+  "version": "0.0.1",
+  "description": "Personal website and demo",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Likwidt/thierryblais.com.git"
+  },
+  "keywords": [
+    "thierry",
+    "blais",
+    "website",
+    "angularjs",
+    "nodejs",
+    "ionic",
+    "javascript",
+    "html5",
+    "css"
+  ],
+  "author": "Thierry Blais <tb@thierryblais.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Likwidt/thierryblais.com/issues"
+  },
+  "homepage": "https://www.thierryblais.com"
+}
