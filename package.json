@@ -24,8 +24,9 @@
     "url": "https://github.com/Likwidt/thierryblais.com/issues"
   },
   "homepage": "https://www.thierryblais.com",
-  "dependencies": {
+  "devDependencies": {
     "ejs": "^2.4.1",
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "gulp": "^3.9.1"
   }
 }
