@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/Likwidt/thierryblais.com/issues"
   },
-  "homepage": "https://www.thierryblais.com"
+  "homepage": "https://www.thierryblais.com",
+  "dependencies": {
+    "ejs": "^2.4.1",
+    "express": "^4.13.4"
+  }
 }
