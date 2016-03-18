@@ -1,0 +1,32 @@
+{
+  "name": "thierryblais.com",
+  "description": "Personal website and demo",
+  "main": "server.js",
+  "authors": [
+    "Thierry Blais <tb@thierryblais.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "thierry",
+    "blais",
+    "website",
+    "angularjs",
+    "nodejs",
+    "ionic",
+    "javascript",
+    "html5",
+    "css"
+  ],
+  "homepage": "https://github.com/Likwidt/thierryblais.com",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
