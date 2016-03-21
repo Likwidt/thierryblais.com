@@ -13,6 +13,7 @@ var Karma = require('karma').Server;
 var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
 	css: ['css/*.css'],
+	googleFonts: ['https://fonts.googleapis.com/css?family=Open+Sans:400,700'],
 	sass: ['sass/*.scss'],
 	html: ['index.html', 'partials/*.html']
 }
@@ -54,8 +55,7 @@ gulp.task('inject', ['sass'], function () {
 				gulp.src(sources.js)
 					.pipe(angularFilesort())
 				))			
-			.pipe(inject(
-				gulp.src(sources.css)))
+			.pipe(inject(gulp.src(sources.css)))
 			.pipe(gulp.dest(''));
 
 });
@@ -87,6 +87,7 @@ gulp.task('jslint', function () {
 gulp.task('watch', function () {
   gulp.watch(sources.html, ['html']);
   gulp.watch(sources.sass, ['sass', 'html']);
+  gulp.watch(sources.js, ['inject', 'html']);
 });
  
 gulp.task('default', ['jslint', 'sass', 'inject', 'test', 'open', 'watch']);
