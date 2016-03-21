@@ -1,5 +1,10 @@
-describe('Hello', function() {
-	it('should show me the money', function() {
-		return false;
-	})
+describe('App module', function() {
+
+	beforeEach(function() {
+		module('tb');
+	});
+
+	it('should return true', function() {
+		return true;
+	});
 });
