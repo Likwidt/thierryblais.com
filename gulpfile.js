@@ -17,7 +17,7 @@ var sources = {
 }
 
  
-gulp.task('connect', function() {
+gulp.task('connect', ['test'], function() {
   connect.server({
     fallback: 'index.html',
     port: 4567,
@@ -86,7 +86,7 @@ gulp.task('watch', function () {
   gulp.watch(sources.sass, ['sass', 'html']);
 });
  
-gulp.task('default', ['jslint', 'sass', 'inject', 'open', 'watch']);
+gulp.task('default', ['jslint', 'sass', 'inject', 'test', 'open', 'watch']);
 
  
 
