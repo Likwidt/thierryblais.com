@@ -40,8 +40,6 @@ gulp.task('inject', function () {
 	var target = gulp.src('index.html');
 	var allSources = sources.js.concat(sources.css);
 
-	console.log(allSources);
-
 	return target
 			.pipe(inject(
 				gulp.src(allSources)
