@@ -26,8 +26,10 @@
   "homepage": "https://www.thierryblais.com",
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-connect": "^3.1.0",
-    "gulp-open": "^1.0.0"
+    "gulp-open": "^1.0.0",
+    "gulp-sass": "^2.2.0"
   },
   "dependencies": {
     "ejs": "^2.4.1",

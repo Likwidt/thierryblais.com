@@ -3,6 +3,8 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 var open = require('gulp-open');
+var sass = require('gulp-sass');
+var concat = require('gulp-concat');
  
 gulp.task('connect', function() {
   connect.server({
@@ -17,7 +19,6 @@ gulp.task('html', function () {
     .pipe(connect.reload());
 });
 
-
 gulp.task('open', ['connect'], function () {
     gulp.src('index.html')
         .pipe(open({
@@ -26,9 +27,22 @@ gulp.task('open', ['connect'], function () {
         }));
 
 });
- 
-gulp.task('watch', function () {
-  gulp.watch(['index.html'], ['html']);
+
+gulp.task('sass', function () {
+  return gulp.src('sass/*.scss')
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(concat('tb.css'))
+    .pipe(gulp.dest('css'));
 });
  
-gulp.task('default', ['open', 'watch']);
+gulp.task('watch', function () {
+  gulp.watch(['index.html', 'partials/*.html'], ['html']);
+  gulp.watch('sass/*.scss', ['sass', 'html']);
+});
+ 
+gulp.task('default', ['sass', 'open', 'watch']);
+
+ 
+
+ 
+
