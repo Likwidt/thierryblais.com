@@ -32,7 +32,11 @@
     "gulp-inject": "^4.0.0",
     "gulp-jslint": "^0.2.2",
     "gulp-open": "^1.0.0",
-    "gulp-sass": "^2.2.0"
+    "gulp-sass": "^2.2.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.8"
   },
   "dependencies": {
     "ejs": "^2.4.1",

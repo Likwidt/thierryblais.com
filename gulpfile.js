@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var inject = require('gulp-inject');
 var jslint = require('gulp-jslint');
 var angularFilesort = require('gulp-angular-filesort');
+var Karma = require('karma').Server;
 var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
 	css: ['css/*.css'],
@@ -35,6 +36,13 @@ gulp.task('open', ['connect'], function () {
             uri: 'http://localhost:4567/index.html',
             app: 'chrome' 
         }));
+});
+
+gulp.task('test', function (done) {
+  new Karma({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 gulp.task('inject', function () {
