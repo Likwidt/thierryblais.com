@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var inject = require('gulp-inject');
 var jslint = require('gulp-jslint');
+var clean = require('gulp-clean');
 var angularFilesort = require('gulp-angular-filesort');
 var Karma = require('karma').Server;
 var sources = {
@@ -25,7 +26,7 @@ gulp.task('connect', ['test'], function() {
   });
 });
  
-gulp.task('html', function () {
+gulp.task('html', ['sass'], function () {
   gulp.src('index.html')
     .pipe(connect.reload());
 });
@@ -45,15 +46,16 @@ gulp.task('test', function (done) {
   }, done).start();
 });
 
-gulp.task('inject', function () {
+gulp.task('inject', ['sass'], function () {
 	var target = gulp.src('index.html');
-	var allSources = sources.js.concat(sources.css);
 
 	return target
 			.pipe(inject(
-				gulp.src(allSources)
+				gulp.src(sources.js)
 					.pipe(angularFilesort())
-				))
+				))			
+			.pipe(inject(
+				gulp.src(sources.css)))
 			.pipe(gulp.dest(''));
 
 });
@@ -61,7 +63,8 @@ gulp.task('inject', function () {
 gulp.task('sass', function () {
   return gulp.src(sources.sass)
     .pipe(sass.sync().on('error', sass.logError))
-    .pipe(concat('tb.css'))
+    //.pipe(concat('tb.css'))
+    .pipe(clean('css'))
     .pipe(gulp.dest('css'));
 });
 
