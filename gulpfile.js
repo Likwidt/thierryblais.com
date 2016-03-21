@@ -6,6 +6,7 @@ var open = require('gulp-open');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var inject = require('gulp-inject');
+var jslint = require('gulp-jslint');
 var angularFilesort = require('gulp-angular-filesort');
 var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
@@ -55,13 +56,29 @@ gulp.task('sass', function () {
     .pipe(concat('tb.css'))
     .pipe(gulp.dest('css'));
 });
+
+gulp.task('jslint', function () {
+    return gulp.src(sources.js)
+	    .pipe(
+	    	jslint({
+	            node: true,
+	            evil: true,
+	            nomen: true,
+	            white: true,
+	            errorsOnly: false,
+	            global: ['angular']
+	        }))
+    		.on('error', function (error) {
+	            console.error(String(error));
+	        });
+});
  
 gulp.task('watch', function () {
   gulp.watch(sources.html, ['html']);
   gulp.watch(sources.sass, ['sass', 'html']);
 });
  
-gulp.task('default', ['sass', 'inject', 'open', 'watch']);
+gulp.task('default', ['jslint', 'sass', 'inject', 'open', 'watch']);
 
  
 
