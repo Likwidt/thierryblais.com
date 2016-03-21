@@ -6,6 +6,7 @@ var open = require('gulp-open');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var inject = require('gulp-inject');
+var angularFilesort = require('gulp-angular-filesort');
 var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
 	css: ['css/*.css'],
@@ -42,7 +43,10 @@ gulp.task('inject', function () {
 	console.log(allSources);
 
 	return target
-			.pipe(inject(gulp.src(allSources)))
+			.pipe(inject(
+				gulp.src(allSources)
+					.pipe(angularFilesort())
+				))
 			.pipe(gulp.dest(''));
 
 });
