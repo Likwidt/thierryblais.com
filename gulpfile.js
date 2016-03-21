@@ -6,7 +6,6 @@ var open = require('gulp-open');
  
 gulp.task('connect', function() {
   connect.server({
-    root: ['www'],
     fallback: 'index.html',
     port: 4567,
     livereload: true
@@ -14,21 +13,22 @@ gulp.task('connect', function() {
 });
  
 gulp.task('html', function () {
-  gulp.src('./www/*.html')
+  gulp.src('index.html')
     .pipe(connect.reload());
 });
 
 
 gulp.task('open', ['connect'], function () {
-    gulp.src('./www/*.html')
+    gulp.src('index.html')
         .pipe(open({
             uri: 'http://localhost:4567/index.html',
-            app: 'chrome' }));
+            app: 'chrome' 
+        }));
 
 });
  
 gulp.task('watch', function () {
-  gulp.watch(['./www/*.html'], ['html']);
+  gulp.watch(['index.html'], ['html']);
 });
  
 gulp.task('default', ['open', 'watch']);
