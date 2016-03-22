@@ -8,7 +8,8 @@
 	<meta name="description" content="Thierry Blais">
 	<meta name="author" content="Thierry Blais">
 
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' rel='stylesheet' type='text/css'>
 
 	<!-- inject:css -->
 
@@ -17,6 +18,9 @@
 
 
 	<link rel="stylesheet" href="/css/tb.css">
+
+
+	<link rel="stylesheet" href="/css/tb.footer.css">
 
 
 	<link rel="stylesheet" href="/css/tb.header.css">
@@ -36,13 +40,11 @@
 
 <body ng-app="tb" ng-controller="MainCtrl as main">
 
-<div class="tb-header">
-	<span class="tb_header__name large">Thierry Blais</span>
-</div>
+	<section ng-include="'partials/tb-header.html'"></section>
 
-<div ng-view></div>
+	<section ng-view></section>
 
-<div class="tb-footer"></div>
+	<section ng-include="'partials/tb-footer.html'"></section>
 
 
 <!-- AngularJS -->
