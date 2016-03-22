@@ -8,6 +8,9 @@ var concat = require('gulp-concat');
 var inject = require('gulp-inject');
 var jslint = require('gulp-jslint');
 var clean = require('gulp-clean');
+var minifyJS = require('gulp-minify');
+var cleanCSS = require('gulp-clean-css');
+var scsslint = require('gulp-scsslint');
 var angularFilesort = require('gulp-angular-filesort');
 var Karma = require('karma').Server;
 var sources = {
@@ -89,8 +92,48 @@ gulp.task('watch', function () {
   gulp.watch(sources.sass, ['sass', 'html']);
   gulp.watch(sources.js, ['inject', 'html']);
 });
+
+gulp.task('minify-css', function () {
+  gulp.src(sources.sass)
+      .pipe(sass.sync().on('error', sass.logError))
+      .pipe(concat('tb.min.css'))
+      .pipe(cleanCSS())
+      .pipe(gulp.dest('dist'));
+});
+
+gulp.task('compress-js', function () {
+  return gulp .src(sources.js)
+              .pipe(concat('tb.js'))
+              .pipe(minifyJS({
+                ext: {
+                  min: '.min.js'
+                }
+              }))
+              .pipe(gulp.dest('dist'));
+});
+
+gulp.task('delete-dev-js', ['compress-js'], function () {
+  return gulp .src('dist/tb.js')
+              .pipe(clean({force: true}));
+});
+
+gulp.task('minify-js', ['compress-js', 'delete-dev-js']);
+
+gulp.task('clean-dist', function() {
+  return gulp.src(['dist'])
+      .pipe(clean({force: true}));
+});
+
+gulp.task('inject-dist', function() {
+  return gulp.src('index.html')
+      .pipe(inject(gulp.src('dist/tb.min.js')))      
+      .pipe(inject(gulp.src('dist/tb.min.css')))
+      .pipe(gulp.dest(''));
+});
+
  
 gulp.task('default', ['jslint', 'sass', 'inject', 'test', 'open', 'watch']);
+gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'inject-dist', 'open']);
 
  
 
