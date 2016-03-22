@@ -1,10 +1,16 @@
 section {
   padding: 0 2rem; }
 
+html {
+  height: 100%;
+  overflow: hidden; }
+
 body {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%;
+  overflow: auto;
   max-height: 100%;
   display: flex;
   min-height: 100vh;
@@ -16,16 +22,15 @@ body {
   body [ng-view] {
     border-width: 1px 0;
     border-style: solid;
-    border-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
     flex: 2;
-    flex-direction: column; }
+    flex-direction: column;
+    overflow: auto; }
   body > section[ng-include] {
-    background-color: rgba(255, 255, 255, 0.7); }
+    color: white; }
   body .tb-header, body .tb-footer {
     flex: 1 100%; }
 
 @media only screen and (orientation: portrait) {
-  html {
-    font-size: 2.5em; }
   section {
     padding: 0 0.5rem; } }

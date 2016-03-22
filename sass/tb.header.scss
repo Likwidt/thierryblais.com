@@ -2,14 +2,23 @@
 	font-family: 'Raleway', sans-serif;
 	font-weight: 700;
 
-	padding: 1em;
+	padding: 0.25rem 0;
 
 	position: relative;
 
 	.tb_header__name{
+		white-space: nowrap;
 		display: block;
-		font-size: 3em;
+		font-size: 2em;
 		left: 0;
 		top: 0;
 	}
+}
+
+@media only screen 
+  and (orientation: portrait) {
+
+  	.tb-header{
+  		padding: 1em 0;
+  	}
 }

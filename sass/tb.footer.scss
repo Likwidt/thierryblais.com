@@ -1,13 +1,12 @@
 .tb-footer{
 	display: block;
 	margin: 0;
-	padding: 0.5rem;
+	padding: 0;
 	text-align: right;
 
 	> li{
 		display: inline-block;
-
-		margin-left: 1rem;
+		margin-left: 1.5em;
 	}
 }
 
@@ -16,16 +15,13 @@ a.tb-footer__btn {
 
 	font-size: 4em;
 
-	padding: 0.3rem;
 	color: inherit;
 	text-decoration: none;
 
-	> i.active {
-		display: none;
-	}
-
+	> i.active { display: none;	}
 	&:hover {
 		> i.active { display: inline; }
 		> i.default { display: none; }	
 	}
 }
+

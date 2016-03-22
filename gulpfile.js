@@ -77,7 +77,7 @@ gulp.task('jslint', function () {
 	            nomen: true,
 	            white: true,
 	            errorsOnly: false,
-	            global: ['angular']
+	            global: ['angular', 'document', 'window', 'FastClick']
 	        }))
     		.on('error', function (error) {
 	            console.error(String(error));

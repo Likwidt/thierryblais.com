@@ -32,6 +32,7 @@
   "dependencies": {
     "angular": "^1.5.2",
     "angular-route": "^1.5.2",
-    "Ionicons": "ionicons#^2.0.1"
+    "Ionicons": "ionicons#^2.0.1",
+    "fastclick": "^1.0.6"
   }
 }

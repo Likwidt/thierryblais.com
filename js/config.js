@@ -9,7 +9,12 @@
 			});
 	}
 
+	function attachFastclick() {
+		FastClick.attach(document.body);
+	}
+
 	angular
 		.module('tb')
-		.config(['$routeProvider', config]);
+		.config(['$routeProvider', config])
+		.run(attachFastclick);
 }());
