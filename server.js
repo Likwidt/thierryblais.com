@@ -1,7 +1,7 @@
-var port = 4567;
+var port = 80;
 var express = require('express');
 var app = express();
-var dirs = [];
+var dirs = ['js', 'css', 'img', 'bower_components', 'partials'];
 var dirname, i;
 
 

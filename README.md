@@ -7,9 +7,11 @@ My personal website
 Nothing fancy, just wanted to document and build a public source of my website and a few modules to put up for public display.  This contains installation instructions and a brief overview of the contents as well as direct links to modules.
 
 ### Requirements
-Here are the few things you'll need that aren't included in the package.json or bower.json
+Here are the few things you'll need that aren't included in the package.json or bower.json you'll need to install them globally to get things running.
 - Node.js
 - Bower
+- karma-cli
+- forever
 
 Aside from that you'll be required to run...
 

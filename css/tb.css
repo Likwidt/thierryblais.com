@@ -15,10 +15,10 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-image: url("../img/stock-vector-car-on-the-golden-state-bridge-265288760.jpg");
+  background-image: url("../img/DSC_0233.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 0 50%; }
+  background-position: center top; }
   body [ng-view] {
     border-width: 1px 0;
     border-style: solid;
