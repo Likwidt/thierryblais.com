@@ -26,4 +26,6 @@ body {
 
 @media only screen and (orientation: portrait) {
   html {
-    font-size: 2em; } }
+    font-size: 2.5em; }
+  section {
+    padding: 0 0.5rem; } }
