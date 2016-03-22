@@ -46,6 +46,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# Generated files
 node_modules/
 bower_components/
 css/*.css
