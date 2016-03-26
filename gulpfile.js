@@ -16,11 +16,13 @@ var Karma = require('karma').Server;
 var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
 	css: ['css/*.css'],
+  bower: ['bower_components/**/*'],
+  img: ['img'],
+  partials: ['partials'],
 	googleFonts: ['https://fonts.googleapis.com/css?family=Open+Sans:400,700'],
 	sass: ['sass/*.scss'],
 	html: ['index.html', 'partials/*.html']
 }
-
  
 gulp.task('connect', ['test'], function() {
   connect.server({
@@ -93,12 +95,12 @@ gulp.task('watch', function () {
   gulp.watch(sources.js, ['inject', 'html']);
 });
 
-gulp.task('minify-css', function () {
+gulp.task('minify-css', ['clean-dist'], function () {
   gulp.src(sources.sass)
       .pipe(sass.sync().on('error', sass.logError))
       .pipe(concat('tb.min.css'))
       .pipe(cleanCSS())
-      .pipe(gulp.dest('dist'));
+      .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('compress-js', function () {
@@ -109,7 +111,7 @@ gulp.task('compress-js', function () {
                   min: '.min.js'
                 }
               }))
-              .pipe(gulp.dest('dist'));
+              .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('delete-dev-js', ['compress-js'], function () {
@@ -124,16 +126,27 @@ gulp.task('clean-dist', function() {
       .pipe(clean({force: true}));
 });
 
-gulp.task('inject-dist', function() {
+gulp.task('inject-dist', ['minify-css', 'minify-js'], function() {
   return gulp.src('index.html')
-      .pipe(inject(gulp.src('dist/tb.min.js')))      
-      .pipe(inject(gulp.src('dist/tb.min.css')))
-      .pipe(gulp.dest(''));
+      .pipe(inject(gulp.src(['dest/js/tb.min.js'], {read: false})))      
+      .pipe(inject(gulp.src(['dest/css/tb.min.css'], {read: false})))
+      .pipe(gulp.dest('dist'));
+});
+
+gulp.task('copy-assets', function() {
+  gulp  .src(sources.bower)
+        .pipe(gulp.dest('dist/bower_components'));
+
+  gulp  .src(sources.img)
+        .pipe(gulp.dest('dist/img'));
+
+  gulp  .src(sources.partials)
+        .pipe(gulp.dest('dist/partials'));
 });
 
  
 gulp.task('default', ['jslint', 'sass', 'inject', 'test', 'open', 'watch']);
-gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'inject-dist', 'open']);
+gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist']);
 
  
 

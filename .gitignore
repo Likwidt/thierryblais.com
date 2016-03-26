@@ -49,5 +49,7 @@ Temporary Items
 # Generated files
 node_modules/
 bower_components/
-css/*.css
+css/
+dist/
 
+css/tb.css
