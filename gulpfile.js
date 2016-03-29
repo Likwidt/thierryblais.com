@@ -18,9 +18,8 @@ var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
 	css: ['css/*.css'],
   bower: ['bower_components/**/*'],
-  img: ['img'],
-  partials: ['partials'],
-	googleFonts: ['https://fonts.googleapis.com/css?family=Open+Sans:400,700'],
+  img: ['img/*.*', 'img/**/*.*'],
+  partials: ['partials/*.*', 'partials/**/*.*'],
 	sass: ['sass/*.scss'],
 	html: ['index.html', 'partials/*.html']
 }
@@ -64,7 +63,6 @@ gulp.task('inject', function () {
         		))			
         	.pipe(inject(gulp.src(sources.css)))
         	.pipe(gulp.dest(''));
-
 });
 
 gulp.task('sass', function () {
@@ -110,6 +108,7 @@ gulp.task('minify-css', function () {
 gulp.task('minify-js', function () {
   return gulp 
     .src(sources.js)
+    .pipe(angularFilesort())
     .pipe(concat('tb.min.js'))
     .pipe(sourcemaps.init())
       .pipe(uglify())
@@ -123,25 +122,33 @@ gulp.task('clean-dist', function() {
               .pipe(clean({force: true}));
 });
 
-gulp.task('inject-dist', ['minify-css', 'minify-js'], function() {
+gulp.task('inject-dist', function() {
+
+  var min = gulp.src(['./dist/js/tb.min.js', './dist/css/tb.min.css'], {read: false});
+
   return gulp .src('index.html')
-              .pipe(inject(gulp.src(['dest/js/tb.min.js'], {read: false})))      
-              .pipe(inject(gulp.src(['dest/css/tb.min.css'], {read: false})))
-              .pipe(gulp.dest('dist'));
+              .pipe(inject(min,{ignorePath: 'dist'}))
+              .pipe(gulp.dest('./dist'));
+
+
 });
 
-gulp.task('copy-assets', function() {
-  gulp  .src(sources.bower)
-        .pipe(gulp.dest('dist/bower_components'));
-
-  gulp  .src(sources.img)
-        .pipe(gulp.dest('dist/img'));
-
-  gulp  .src(sources.partials)
-        .pipe(gulp.dest('dist/partials'));
+gulp.task('copy-bower', function() {
+  return gulp .src(sources.bower)
+              .pipe(gulp.dest('dist/bower_components'));
 });
 
+gulp.task('copy-img', function() {
+  return gulp .src(sources.img)
+              .pipe(gulp.dest('dist/img'));
+});
 
+gulp.task('copy-partials', function() {
+  return gulp .src(sources.partials)
+              .pipe(gulp.dest('dist/partials'));
+});
+
+gulp.task('copy-assets', ['copy-bower', 'copy-img', 'copy-partials']);
 
  
 gulp.task('default', function(done) {
@@ -149,7 +156,7 @@ gulp.task('default', function(done) {
 });
 
 gulp.task('dist', function(done) {
-  runSequence('clean-dist', 'jslint', 'minify-js', 'minify-css', done);
+  runSequence('clean-dist', 'jslint', 'test', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist');
 });
 
 //gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist']);
