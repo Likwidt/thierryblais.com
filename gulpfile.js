@@ -8,7 +8,8 @@ var concat = require('gulp-concat');
 var inject = require('gulp-inject');
 var jslint = require('gulp-jslint');
 var clean = require('gulp-clean');
-var minifyJS = require('gulp-minify');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
 var angularFilesort = require('gulp-angular-filesort');
@@ -96,31 +97,26 @@ gulp.task('watch', function () {
   gulp.watch(sources.js, ['inject', 'html']);
 });
 
-gulp.task('minify-css', ['clean-dist'], function () {
+gulp.task('minify-css', function () {
   gulp.src(sources.sass)
       .pipe(sass.sync().on('error', sass.logError))
       .pipe(concat('tb.min.css'))
-      .pipe(cleanCSS())
+      .pipe(sourcemaps.init())
+        .pipe(cleanCSS())
+      .pipe(sourcemaps.write('../css'))
       .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('compress-js', function () {
-  return gulp .src(sources.js)
-              .pipe(concat('tb.js'))
-              .pipe(minifyJS({
-                ext: {
-                  min: '.min.js'
-                }
-              }))
-              .pipe(gulp.dest('dist/js'));
+gulp.task('minify-js', function () {
+  return gulp 
+    .src(sources.js)
+    .pipe(concat('tb.min.js'))
+    .pipe(sourcemaps.init())
+      .pipe(uglify())
+    .pipe(sourcemaps.write('../js'))
+    .pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('delete-dev-js', ['compress-js'], function () {
-  return gulp .src('dist/tb.js')
-              .pipe(clean({force: true}));
-});
-
-gulp.task('minify-js', ['compress-js', 'delete-dev-js']);
 
 gulp.task('clean-dist', function() {
   return gulp .src(['dist'])
@@ -149,12 +145,14 @@ gulp.task('copy-assets', function() {
 
  
 gulp.task('default', function(done) {
-  runSequence('jslint', 'sass', 'test', 'inject', 'connect', 'open', 'watch', function() {
-    console.log('All done! ;)');
-    done();
-  })
+  runSequence('jslint', 'sass', 'test', 'inject', 'connect', 'open', 'watch', done)
 });
-gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist']);
+
+gulp.task('dist', function(done) {
+  runSequence('clean-dist', 'jslint', 'minify-js', 'minify-css', done);
+});
+
+//gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist']);
 
  
 
