@@ -10,7 +10,7 @@ var jslint = require('gulp-jslint');
 var clean = require('gulp-clean');
 var minifyJS = require('gulp-minify');
 var cleanCSS = require('gulp-clean-css');
-var scsslint = require('gulp-scsslint');
+var runSequence = require('run-sequence');
 var angularFilesort = require('gulp-angular-filesort');
 var Karma = require('karma').Server;
 var sources = {
@@ -24,44 +24,45 @@ var sources = {
 	html: ['index.html', 'partials/*.html']
 }
  
-gulp.task('connect', ['test'], function() {
-  connect.server({
+gulp.task('connect', function() {
+  return connect.server({
     fallback: 'index.html',
     port: 4567,
     livereload: true
   });
 });
  
-gulp.task('html', ['sass'], function () {
-  gulp.src('index.html')
-    .pipe(connect.reload());
+gulp.task('html', function () {
+  return gulp 
+          .src('index.html')
+          .pipe(connect.reload());
 });
 
-gulp.task('open', ['connect'], function () {
-    gulp.src('index.html')
-        .pipe(open({
-            uri: 'http://localhost:4567/index.html',
-            app: 'chrome' 
-        }));
+gulp.task('open', function () {
+    return gulp 
+            .src('index.html')
+            .pipe(open({
+                uri: 'http://localhost:4567/index.html',
+                app: 'chrome' 
+            }));
 });
 
-gulp.task('test', function (done) {
-  new Karma({
+gulp.task('test', function (cb) {
+  return new Karma({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
-  }, done).start();
+  }, cb).start();
 });
 
-gulp.task('inject', ['sass'], function () {
-	var target = gulp.src('index.html');
-
-	return target
-			.pipe(inject(
-				gulp.src(sources.js)
-					.pipe(angularFilesort())
-				))			
-			.pipe(inject(gulp.src(sources.css)))
-			.pipe(gulp.dest(''));
+gulp.task('inject', function () {
+	return gulp 
+          .src('index.html')
+        	.pipe(inject(
+        		gulp.src(sources.js)
+        			.pipe(angularFilesort())
+        		))			
+        	.pipe(inject(gulp.src(sources.css)))
+        	.pipe(gulp.dest(''));
 
 });
 
@@ -122,15 +123,15 @@ gulp.task('delete-dev-js', ['compress-js'], function () {
 gulp.task('minify-js', ['compress-js', 'delete-dev-js']);
 
 gulp.task('clean-dist', function() {
-  return gulp.src(['dist'])
-      .pipe(clean({force: true}));
+  return gulp .src(['dist'])
+              .pipe(clean({force: true}));
 });
 
 gulp.task('inject-dist', ['minify-css', 'minify-js'], function() {
-  return gulp.src('index.html')
-      .pipe(inject(gulp.src(['dest/js/tb.min.js'], {read: false})))      
-      .pipe(inject(gulp.src(['dest/css/tb.min.css'], {read: false})))
-      .pipe(gulp.dest('dist'));
+  return gulp .src('index.html')
+              .pipe(inject(gulp.src(['dest/js/tb.min.js'], {read: false})))      
+              .pipe(inject(gulp.src(['dest/css/tb.min.css'], {read: false})))
+              .pipe(gulp.dest('dist'));
 });
 
 gulp.task('copy-assets', function() {
@@ -144,8 +145,15 @@ gulp.task('copy-assets', function() {
         .pipe(gulp.dest('dist/partials'));
 });
 
+
+
  
-gulp.task('default', ['jslint', 'sass', 'inject', 'test', 'open', 'watch']);
+gulp.task('default', function(done) {
+  runSequence('jslint', 'sass', 'test', 'inject', 'connect', 'open', 'watch', function() {
+    console.log('All done! ;)');
+    done();
+  })
+});
 gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist']);
 
  

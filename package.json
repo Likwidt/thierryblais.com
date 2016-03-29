@@ -41,7 +41,8 @@
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.2",
     "karma-jasmine": "^0.3.8",
-    "karma-spec-reporter": "0.0.24"
+    "karma-spec-reporter": "0.0.24",
+    "run-sequence": "^1.1.5"
   },
   "dependencies": {
     "ejs": "^2.4.1",
