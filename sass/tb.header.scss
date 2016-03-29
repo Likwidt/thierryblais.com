@@ -1,8 +1,8 @@
 .tb-header{
-	font-family: 'Raleway', sans-serif;
+	font-family: 'Poiret One', cursive;
 	font-weight: 700;
 
-	padding: 0.25rem 0;
+	padding: 0.25rem;
 
 	position: relative;
 
@@ -19,6 +19,22 @@
   and (orientation: portrait) {
 
   	.tb-header{
-  		padding: 1em 0;
+  		padding: 1em 0.25em;
+  	}
+}
+
+@media only screen 
+  and (min-width: 768px) {
+
+  	.tb-header{
+  		font-size: 2rem;
+  	}
+}
+
+@media only screen 
+  and (min-width: 1024px) {
+
+  	.tb-header{
+  		font-size: 3rem;
   	}
 }
