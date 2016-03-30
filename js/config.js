@@ -3,7 +3,7 @@
 
 	function config($routeProvider) {
 		$routeProvider
-			.when('/', {templateUrl: 'partials/home.html'})
+			.when('/', {templateUrl: 'partials/home.html', controller: 'HomeCtrl', controllerAs: 'home'})
 			.when('/signature', {templateUrl: 'partials/signature.html', controller: 'SignatureCtrl', controllerAs: 'sign'})
 			.otherwise({
 				redirectTo: '/'	
