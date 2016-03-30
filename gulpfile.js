@@ -6,9 +6,10 @@ var open = require('gulp-open');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var inject = require('gulp-inject');
-var jslint = require('gulp-jslint');
+var jshint = require('gulp-jshint');
 var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
+var stylish = require('jshint-stylish');
 var sourcemaps = require('gulp-sourcemaps');
 var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
@@ -70,31 +71,36 @@ gulp.task('sass', function () {
   return gulp.src(sources.sass)
     .pipe(sass.sync().on('error', sass.logError))
     //.pipe(concat('tb.css'))
-    .pipe(clean('css'))
     .pipe(gulp.dest('css'));
 });
 
-gulp.task('jslint', function () {
+gulp.task('jshint', function () {
+var confgig ={
+              node: true,
+              evil: true,
+              nomen: true,
+              white: true,
+              errorsOnly: false,
+              global: ['angular', 'document', 'window', 'FastClick']
+          };
+
     return gulp.src(sources.js)
-	    .pipe(
-	    	jslint({
-	            node: true,
-	            evil: true,
-	            nomen: true,
-	            white: true,
-	            errorsOnly: false,
-	            global: ['angular', 'document', 'window', 'FastClick']
-	        }))
-    		.on('error', function (error) {
-	            console.error(String(error));
-	        });
+	    .pipe(jshint())
+      .pipe(jshint.reporter('jshint-stylish'))
+      .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('watch-html', function () {
+  return gulp.watch(sources.html, ['html']);
+});
+gulp.task('watch-sass', function () {
+  return gulp.watch(sources.sass, ['sass', 'inject', 'html']);
+});
+gulp.task('watch-js', function () {
+  return gulp.watch(sources.js, ['html']);
 });
  
-gulp.task('watch', function () {
-  gulp.watch(sources.html, ['html']);
-  gulp.watch(sources.sass, ['sass', 'html']);
-  gulp.watch(sources.js, ['inject', 'html']);
-});
+gulp.task('watch', ['watch-html', 'watch-sass', 'watch-js']);
 
 gulp.task('minify-css', function () {
   gulp.src(sources.sass)
@@ -153,11 +159,11 @@ gulp.task('copy-assets', ['copy-bower', 'copy-img', 'copy-partials']);
 
  
 gulp.task('default', function(done) {
-  runSequence('jslint', 'sass', 'test', 'inject', 'connect', 'open', 'watch', done)
+  runSequence('jshint', 'sass', 'test', 'inject', 'watch', 'connect', 'open', done)
 });
 
 gulp.task('dist', function(done) {
-  runSequence('clean-dist', 'jslint', 'test', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist');
+  runSequence('clean-dist', 'jshint', 'test', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist');
 });
 
  

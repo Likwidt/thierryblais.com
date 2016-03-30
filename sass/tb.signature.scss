@@ -1,0 +1,17 @@
+@import 'mixins';
+
+.signature{
+	background-color: rgba(255,255,255,0.5);
+	position: relative;
+	@include flex(1);
+	@include vendor-prefix('flex-direction', 'column');
+
+	.instruction{
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 1rem;
+		color: black;
+		font-family: 'Arial';
+	}
+}

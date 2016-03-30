@@ -4,25 +4,25 @@
 	function SignatureCtrl() {
 		var ctrl = this;
 
-		ctrl.signature;
+		ctrl.signature = null;
 
 	}
 
 	function tbResize($window) {
 		return {
 			restrict: 'A',
-			link: function(scope, element) {
+			link: function resizeLink(scope, element) {
 				var elem = element[0];
 
 				$window.onresize = resizeCanvas;
+				resizeCanvas();
 
-				function resizeCanvas(e){
+				function resizeCanvas(){
 					var parent = elem.parentNode;
-
 					elem.setAttribute('width', parent.scrollWidth);
 					elem.setAttribute('height', parent.scrollHeight);
 				}
-			}
+			} 
 		};
 	}
 

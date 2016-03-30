@@ -3,3 +3,17 @@
     #{$vendor}#{$name}: #{$value};
   }
 }
+
+@mixin flex($n: null){
+	  display: -webkit-box;  
+	  display: -ms-flexbox;  
+	  display: -webkit-flex; 
+	  display: flex;
+
+	@if	$n != null {
+		-webkit-box-flex: #{$n};
+		-webkit-flex: #{$n};
+		-ms-flex: #{$n}; 
+		flex: #{$n};
+	}      
+}
