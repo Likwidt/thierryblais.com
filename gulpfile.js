@@ -21,7 +21,8 @@ var sources = {
   img: ['img/*.*', 'img/**/*.*'],
   partials: ['partials/*.*', 'partials/**/*.*'],
 	sass: ['sass/*.scss'],
-	html: ['index.html', 'partials/*.html']
+	html: ['index.html', 'partials/*.html'],
+  lib: ['lib/**/*.min.js']
 }
  
 gulp.task('connect', function() {
@@ -58,7 +59,7 @@ gulp.task('inject', function () {
 	return gulp 
           .src('index.html')
         	.pipe(inject(
-        		gulp.src(sources.js)
+        		gulp.src(sources.js.concat(sources.lib))
         			.pipe(angularFilesort())
         		))			
         	.pipe(inject(gulp.src(sources.css)))
@@ -107,7 +108,7 @@ gulp.task('minify-css', function () {
 
 gulp.task('minify-js', function () {
   return gulp 
-    .src(sources.js)
+    .src(sources.js.concat(sources.lib))
     .pipe(angularFilesort())
     .pipe(concat('tb.min.js'))
     .pipe(sourcemaps.init())
@@ -158,8 +159,6 @@ gulp.task('default', function(done) {
 gulp.task('dist', function(done) {
   runSequence('clean-dist', 'jslint', 'test', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist');
 });
-
-//gulp.task('dist', ['clean-dist', 'jslint', 'minify-css', 'minify-js', 'copy-assets', 'inject-dist']);
 
  
 

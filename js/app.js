@@ -3,6 +3,7 @@
 
 	angular
 		.module('tb', [
-			'ngRoute'
+			'ngRoute',
+			'tb-free-draw'
 		]);
 }());
