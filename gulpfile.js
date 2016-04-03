@@ -75,17 +75,8 @@ gulp.task('sass', function () {
 });
 
 gulp.task('jshint', function () {
-var confgig ={
-              node: true,
-              evil: true,
-              nomen: true,
-              white: true,
-              errorsOnly: false,
-              global: ['angular', 'document', 'window', 'FastClick']
-          };
-
     return gulp.src(sources.js)
-	    .pipe(jshint())
+      .pipe(jshint())
       .pipe(jshint.reporter('jshint-stylish'))
       .pipe(jshint.reporter('fail'));
 });
