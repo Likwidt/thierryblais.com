@@ -4,6 +4,7 @@
 	angular
 		.module('tb', [
 			'ngRoute',
-			'tb-free-draw'
+			'tb-free-draw',
+			'tb-video-player'
 		]);
 }());

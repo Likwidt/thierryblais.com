@@ -17,7 +17,7 @@ var angularFilesort = require('gulp-angular-filesort');
 var Karma = require('karma').Server;
 var sources = {
 	js: ['js/*.js', 'js/**/*.js'],
-	css: ['css/*.css'],
+	css: ['css/*.css', 'lib/**/*.min.css'],
   bower: ['bower_components/**/*'],
   img: ['img/*.*', 'img/**/*.*'],
   partials: ['partials/*.*', 'partials/**/*.*'],
