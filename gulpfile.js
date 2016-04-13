@@ -23,7 +23,8 @@ var sources = {
   partials: ['partials/*.*', 'partials/**/*.*'],
 	sass: ['sass/*.scss'],
 	html: ['index.html', 'partials/*.html'],
-  lib: ['lib/**/*.min.js']
+  lib: ['lib/**/*.min.js'],
+  libcss: ['lib/**/*.min.css']
 }
  
 gulp.task('connect', function() {
@@ -94,7 +95,7 @@ gulp.task('watch-js', function () {
 gulp.task('watch', ['watch-html', 'watch-sass', 'watch-js']);
 
 gulp.task('minify-css', function () {
-  gulp.src(sources.sass)
+  return gulp.src(sources.sass)
       .pipe(sass.sync().on('error', sass.logError))
       .pipe(concat('tb.min.css'))
       .pipe(sourcemaps.init())

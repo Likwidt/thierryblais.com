@@ -5,7 +5,7 @@ var dirs = ['js', 'css', 'img', 'bower_components', 'partials'];
 var dirname, i;
 
 
-app.set('views', __dirname + '/');
+app.set('views', __dirname + '/dist');
 
 app.engine('html', require('ejs').renderFile);
 
@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 
 for (i = 0; i < dirs.length; i++) {
 	dirname = ['/', dirs[i]].join('');
-	app.use(dirname, express.static(__dirname + dirname));
+	app.use(dirname, express.static(__dirname + '/dist' + dirname));
 }
 
 app.listen(port, function() {

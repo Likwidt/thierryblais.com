@@ -26,6 +26,8 @@
   "homepage": "https://www.thierryblais.com",
   "devDependencies": {
     "angular-mocks": "^1.5.2",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "^1.1.1",
     "gulp-clean": "^0.3.2",
