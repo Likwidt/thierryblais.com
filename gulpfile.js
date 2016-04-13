@@ -24,7 +24,8 @@ var sources = {
 	sass: ['sass/*.scss'],
 	html: ['index.html', 'partials/*.html'],
   lib: ['lib/**/*.min.js'],
-  libcss: ['lib/**/*.min.css']
+  libcss: ['lib/**/*.min.css'],
+  cssAssets: ['lib/tb-video-player/img/*']
 }
  
 gulp.task('connect', function() {
@@ -94,13 +95,19 @@ gulp.task('watch-js', function () {
  
 gulp.task('watch', ['watch-html', 'watch-sass', 'watch-js']);
 
-gulp.task('minify-css', function () {
-  return gulp.src(sources.sass)
+gulp.task('copy-css-assets', function() {
+  return gulp
+          .src(sources.cssAssets)
+          .pipe(gulp.dest('dist/css/img'))
+});
+
+gulp.task('minify-css', ['copy-css-assets'], function () {
+  return gulp.src(sources.sass.concat(sources.libcss))
       .pipe(sass.sync().on('error', sass.logError))
       .pipe(concat('tb.min.css'))
       .pipe(sourcemaps.init())
         .pipe(cleanCSS())
-      .pipe(sourcemaps.write('../css'))
+      .pipe(sourcemaps.write('/'))
       .pipe(gulp.dest('dist/css'));
 });
 
@@ -111,7 +118,7 @@ gulp.task('minify-js', function () {
     .pipe(concat('tb.min.js'))
     .pipe(sourcemaps.init())
       .pipe(uglify())
-    .pipe(sourcemaps.write('../js'))
+    .pipe(sourcemaps.write('/'))
     .pipe(gulp.dest('dist/js'));
 });
 
